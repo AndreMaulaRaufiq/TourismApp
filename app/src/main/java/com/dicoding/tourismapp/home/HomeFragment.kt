@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,10 +53,12 @@ class HomeFragment : Fragment() {
                             binding.progressBar.visibility = View.GONE
                             tourismAdapter.setData(tourism.data)
                         }
+
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
-                            binding.viewError.tvError.text = tourism.message ?: getString(R.string.something_wrong)
+                            binding.viewError.tvError.text =
+                                tourism.message ?: getString(R.string.something_wrong)
                         }
                     }
                 }

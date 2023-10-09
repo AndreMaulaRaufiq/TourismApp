@@ -25,6 +25,6 @@ data class TourismResponse(
     val like: Int,
 
     @field:SerializedName("image")
-    val image: String
+    val image: String,
 )
 
