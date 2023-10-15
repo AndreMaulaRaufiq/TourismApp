@@ -9,17 +9,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RemoteDataSource private constructor(private val apiService: ApiService) {
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
+@Singleton
+class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
-        fun getInstance(service: ApiService): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(service)
-            }
-    }
+//    companion object {
+//        @Volatile
+//        private var instance: RemoteDataSource? = null
+//
+//        fun getInstance(service: ApiService): RemoteDataSource =
+//            instance ?: synchronized(this) {
+//                instance ?: RemoteDataSource(service)
+//            }
+//    }
 
     @SuppressLint("CheckResult")
     suspend fun getAllTourism(): Flow<ApiResponse<List<TourismResponse>>> {
@@ -28,12 +32,12 @@ class RemoteDataSource private constructor(private val apiService: ApiService) {
             try {
                 val response = apiService.getList()
                 val dataArray = response.places
-                if (dataArray.isNotEmpty()){
+                if (dataArray.isNotEmpty()) {
                     emit(ApiResponse.Success(response.places))
                 } else {
                     emit(ApiResponse.Empty)
                 }
-            } catch (e : Exception){
+            } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.e("RemoteDataSource", e.toString())
             }
