@@ -21,7 +21,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,7 +44,8 @@ class FavoriteFragment : Fragment() {
 
             favoriteViewModel.favoriteTourism.observe(viewLifecycleOwner, { dataTourism ->
                 tourismAdapter.setData(dataTourism)
-                binding.viewEmpty.root.visibility = if (dataTourism.isNotEmpty()) View.GONE else View.VISIBLE
+                binding.viewEmpty.root.visibility =
+                    if (dataTourism.isNotEmpty()) View.GONE else View.VISIBLE
             })
 
             with(binding.rvTourism) {
